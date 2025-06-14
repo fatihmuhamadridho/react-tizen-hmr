@@ -1,7 +1,7 @@
-import avplay from "./avplay";
+import avplay from './avplay';
 
 const webapis = {
-    avplay: avplay
-}
+  avplay: avplay,
+};
 
 export default webapis;

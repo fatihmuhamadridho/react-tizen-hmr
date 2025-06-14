@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import webapis from "./libs/tizens/webapis";
+import { useEffect, useState } from 'react';
+import webapis from './libs/tizens/webapis';
 
 const HomePage = () => {
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
-  const videoPath =
-    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+  const videoPath = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
   useEffect(() => {
     startPlayback(videoPath);
@@ -17,17 +16,17 @@ const HomePage = () => {
 
       webapis.avplay.open(path);
       webapis.avplay.setDisplayRect(0, 0, 1920, 1080);
-      webapis.avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_FULL_SCREEN");
+      webapis.avplay.setDisplayMethod('PLAYER_DISPLAY_MODE_FULL_SCREEN');
       webapis.avplay.prepareAsync(
         () => {
           webapis.avplay.play();
           setIsVideoPlay(true);
-          console.log("Now Playing:", path);
+          console.log('Now Playing:', path);
         },
-        (err: any) => console.error("prepareAsync error:", err)
+        (err: any) => console.error('prepareAsync error:', err),
       );
     } catch (e) {
-      console.error("startPlayback error:", e);
+      console.error('startPlayback error:', e);
     }
   };
 
@@ -39,24 +38,26 @@ const HomePage = () => {
       webapis.avplay.play();
       setIsVideoPlay(true);
     }
-  }
+  };
 
   return (
     <div>
       <div
         style={{
-          position: "absolute",
+          position: 'absolute',
           top: 0,
           left: 0,
           zIndex: 9999,
-          color: "white",
+          color: 'white',
           fontSize: 50,
-          backgroundColor: "rgba(0, 0, 0, 1)",
+          backgroundColor: 'rgba(0, 0, 0, 1)',
           padding: 20,
         }}
       >
         <div>BigBuckBunny test.mp4</div>
-        <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>{isVideoPlay ? "Pause" : "Play"}</button>
+        <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>
+          {isVideoPlay ? 'Pause' : 'Play'}
+        </button>
       </div>
     </div>
   );

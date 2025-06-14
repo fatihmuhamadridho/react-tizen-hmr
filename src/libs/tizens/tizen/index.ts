@@ -1,2 +1,2 @@
-const tizen = {}
+const tizen = {};
 export default tizen;

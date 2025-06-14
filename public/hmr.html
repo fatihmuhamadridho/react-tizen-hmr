@@ -1,46 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-        <meta name="theme-color" content="#000000" />
-    </head>
-    <body ondragstart="return!1" onselectstart="return!1">
-        <script>
-            function setInnerHTML(targetNode, parsedNode, tagTypes) {
-                function insertTagsToTarget(type) {
-                    Array.from(targetNode.querySelectorAll(type)).forEach(function (prevEl) {
-                        var newEl = document.createElement(type);
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+  </head>
+  <body ondragstart="return!1" onselectstart="return!1">
+    <script>
+      function setInnerHTML(targetNode, parsedNode, tagTypes) {
+        function insertTagsToTarget(type) {
+          Array.from(targetNode.querySelectorAll(type)).forEach(function (prevEl) {
+            var newEl = document.createElement(type);
 
-                        Array.from(prevEl.attributes).forEach((attr) => {
-                            newEl.setAttribute(attr.name, attr.value);
-                        });
+            Array.from(prevEl.attributes).forEach((attr) => {
+              newEl.setAttribute(attr.name, attr.value);
+            });
 
-                        var textNode = document.createTextNode(prevEl.innerHTML);
-                        newEl.appendChild(textNode);
+            var textNode = document.createTextNode(prevEl.innerHTML);
+            newEl.appendChild(textNode);
 
-                        prevEl.parentNode.replaceChild(newEl, prevEl);
-                    });
-                }
+            prevEl.parentNode.replaceChild(newEl, prevEl);
+          });
+        }
 
-                tagTypes.forEach(insertTagsToTarget);
+        tagTypes.forEach(insertTagsToTarget);
 
-                targetNode.innerHTML = parsedNode.innerHTML;
-            }
+        targetNode.innerHTML = parsedNode.innerHTML;
+      }
 
-            var localhost = "http://192.168.1.12:3000/"; // 개발서버 IP에서 fetch
-            fetch(localhost)
-                .then(function (res) {
-                    return res.text();
-                })
-                .then(function (html) {
-                    var parser = new DOMParser();
+      var localhost = 'http://192.168.1.12:3000/'; // 개발서버 IP에서 fetch
+      fetch(localhost)
+        .then(function (res) {
+          return res.text();
+        })
+        .then(function (html) {
+          var parser = new DOMParser();
 
-                    var parsedDocument = parser.parseFromString(html, "text/html");
+          var parsedDocument = parser.parseFromString(html, 'text/html');
 
-                    setInnerHTML(document.head, parsedDocument.head, ["script"]);
-                    setInnerHTML(document.body, parsedDocument.body, ["script"]);
-                });
-        </script>
-    </body>
+          setInnerHTML(document.head, parsedDocument.head, ['script']);
+          setInnerHTML(document.body, parsedDocument.body, ['script']);
+        });
+    </script>
+  </body>
 </html>
