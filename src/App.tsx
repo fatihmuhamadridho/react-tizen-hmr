@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import webapis from "./libs/tizens/webapis";
 
 const HomePage = () => {
+  const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
   const videoPath =
     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
@@ -8,31 +10,39 @@ const HomePage = () => {
     startPlayback(videoPath);
   }, []);
 
-  function startPlayback(path: any) {
+  const startPlayback = (path: string) => {
     try {
-      if ((window as any).avplay) {
-        (window as any).avplay.stop();
-        (window as any).avplay.close();
-      }
-      (window as any).avplay = (window as any).webapis.avplay;
-      (window as any).avplay.open(path);
-      (window as any).avplay.setDisplayRect(0, 0, 1920, 1080);
-      (window as any).avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_FULL_SCREEN");
-      (window as any).avplay.prepareAsync(
+      webapis.avplay.stop?.();
+      webapis.avplay.close?.();
+
+      webapis.avplay.open(path);
+      webapis.avplay.setDisplayRect(0, 0, 1920, 1080);
+      webapis.avplay.setDisplayMethod("PLAYER_DISPLAY_MODE_FULL_SCREEN");
+      webapis.avplay.prepareAsync(
         () => {
-          (window as any).avplay.play();
+          webapis.avplay.play();
+          setIsVideoPlay(true);
           console.log("Now Playing:", path);
         },
-        (e: any) => console.error("prepareAsync error:", e)
+        (err: any) => console.error("prepareAsync error:", err)
       );
     } catch (e) {
       console.error("startPlayback error:", e);
+    }
+  };
+
+  const handlePlayPauseVideo = () => {
+    if (isVideoPlay) {
+      webapis.avplay.pause();
+      setIsVideoPlay(false);
+    } else {
+      webapis.avplay.play();
+      setIsVideoPlay(true);
     }
   }
 
   return (
     <div>
-      {/* Overlay Content */}
       <div
         style={{
           position: "absolute",
@@ -46,6 +56,7 @@ const HomePage = () => {
         }}
       >
         <div>BigBuckBunny test.mp4</div>
+        <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>{isVideoPlay ? "Pause" : "Play"}</button>
       </div>
     </div>
   );
