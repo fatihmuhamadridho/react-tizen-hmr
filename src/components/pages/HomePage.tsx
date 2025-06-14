@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import webapis from './libs/tizens/webapis';
+import webapis from '../../libs/tizens/webapis';
+import { useNavigate } from 'react-router';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
   const videoPath = 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
@@ -40,6 +42,12 @@ const HomePage = () => {
     }
   };
 
+  const handleNavigateToPlaylist = () => {
+    webapis.avplay.stop?.();
+    webapis.avplay.close?.();
+    navigate('/playlist');
+  };
+
   return (
     <div>
       <div
@@ -57,6 +65,9 @@ const HomePage = () => {
         <div>BigBuckBunny test.mp4</div>
         <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>
           {isVideoPlay ? 'Pause' : 'Play'}
+        </button>
+        <button style={{ fontSize: 50 }} onClick={handleNavigateToPlaylist}>
+          Playlist
         </button>
       </div>
     </div>
