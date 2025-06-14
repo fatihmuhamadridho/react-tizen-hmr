@@ -24,7 +24,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "css-loader": "^6.5.1",
     "css-minimizer-webpack-plugin": "^3.2.0",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.5.0",
     "dotenv-expand": "^5.1.0",
     "eslint": "^8.3.0",
     "eslint-config-react-app": "^7.0.1",
@@ -68,8 +68,8 @@
     "build": "node scripts/build.js",
     "start": "node scripts/start.js",
     "test": "node scripts/test.js",
-    "build:tizen": "tizen package -t wgt -s fatih4 -o ./build -- ./build",
-    "install:tizen": "tizen install -n ./build/reacttizen.wgt -s emulator-26101"
+    "build:tizen": "node scripts/build-tizen.js",
+    "install:tizen": "node scripts/install-tizen.js"
   },
   "eslintConfig": {
     "extends": [
