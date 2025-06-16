@@ -101,20 +101,7 @@ const HomePage = () => {
   };
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        zIndex: 9999,
-        color: 'white',
-        fontSize: 50,
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-        padding: 20,
-        width: '100%',
-        height: '100%',
-      }}
-    >
+    <div className="absolute bg-black/[0.1] top-0 left-0 z-[9999] text-white text-[50px] p-[20px] w-full h-full">
       <div>Looping Video Player</div>
       <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>
         {isVideoPlay ? 'Pause' : 'Play'}
