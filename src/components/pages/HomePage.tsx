@@ -8,8 +8,8 @@ const HomePage = () => {
   const videoList = useRef<string[]>([
     'https://samplelib.com/lib/preview/mp4/sample-5s.mp4',
     'https://filesamples.com/samples/video/mp4/sample_640x360.mp4',
-    'https://sample-videos.com/video123/mp4/240/big_buck_bunny_240p_5mb.mp4',
   ]);
+  const durationRef = useRef<number>(0);
   const currentIndex = useRef(0);
 
   useEffect(() => {
@@ -35,33 +35,47 @@ const HomePage = () => {
       webapis.avplay.setDisplayMethod('PLAYER_DISPLAY_MODE_FULL_SCREEN');
 
       webapis.avplay.setListener({
-        oncurrentplaytime: (time: number) => {
-          // Optional: bisa dipakai untuk tracking waktu
+        oncurrentplaytime: (currentTime: number) => {
+          // Durasi biasanya dalam ms, kita pakai detik
+          if (durationRef.current > 0 && currentTime >= durationRef.current - 1000) {
+            console.log('Video ended manually via currentTime');
+            webapis.avplay.stop();
+            playNextVideo();
+          }
         },
         onstreamcompleted: () => {
-          console.log('Video finished:', path);
+          console.log('onstreamcompleted triggered for:', path);
           playNextVideo();
         },
         onerror: (error: any) => {
           console.error('Playback error:', error);
-          playNextVideo(); // Lanjutkan meski error
+          playNextVideo();
         },
       });
 
       webapis.avplay.prepareAsync(
         () => {
+          try {
+            const duration = webapis.avplay.getDuration(); // in ms
+            durationRef.current = duration;
+            console.log('Video duration:', duration, 'ms');
+          } catch (e) {
+            console.warn('getDuration() failed:', e);
+            durationRef.current = 0;
+          }
+
           webapis.avplay.play();
           setIsVideoPlay(true);
           console.log('Now Playing:', path);
         },
         (err: any) => {
           console.error('prepareAsync error:', err);
-          playNextVideo(); // Lanjut jika gagal prepare
+          playNextVideo();
         },
       );
     } catch (e) {
       console.error('startPlayback error:', e);
-      playNextVideo(); // Lanjut jika error runtime
+      playNextVideo();
     }
   };
 
@@ -95,7 +109,7 @@ const HomePage = () => {
         zIndex: 9999,
         color: 'white',
         fontSize: 50,
-        backgroundColor: 'rgba(0, 0, 0, 1)',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
         padding: 20,
         width: '100%',
         height: '100%',
