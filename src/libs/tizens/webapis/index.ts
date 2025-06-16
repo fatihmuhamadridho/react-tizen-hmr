@@ -1,7 +1,9 @@
+import adinfo from './adinfo';
 import avplay from './avplay';
 
 const webapis = {
-  avplay: avplay,
+  avplay,
+  adinfo,
 };
 
 export default webapis;

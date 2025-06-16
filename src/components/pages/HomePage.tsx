@@ -62,7 +62,7 @@ const HomePage = () => {
           padding: 20,
         }}
       >
-        <div>BigBuckBunny test.mp4</div>
+        <div>Patricia-BigBuckBunny.mp4</div>
         <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>
           {isVideoPlay ? 'Pause' : 'Play'}
         </button>
