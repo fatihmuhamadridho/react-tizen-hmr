@@ -49,27 +49,27 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: 9999,
-          color: 'white',
-          fontSize: 50,
-          backgroundColor: 'rgba(0, 0, 0, 1)',
-          padding: 20,
-        }}
-      >
-        <div>Patricia-BigBuckBunny.mp4</div>
-        <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>
-          {isVideoPlay ? 'Pause' : 'Play'}
-        </button>
-        <button style={{ fontSize: 50 }} onClick={handleNavigateToPlaylist}>
-          Playlist
-        </button>
-      </div>
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 9999,
+        color: 'white',
+        fontSize: 50,
+        backgroundColor: 'rgba(0, 0, 0, 1)',
+        padding: 20,
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <div>Patricia-BigBuckBunny.mp4</div>
+      <button style={{ fontSize: 50 }} onClick={handlePlayPauseVideo}>
+        {isVideoPlay ? 'Pause' : 'Play'}
+      </button>
+      <button style={{ fontSize: 50 }} onClick={handleNavigateToPlaylist}>
+        Playlist
+      </button>
     </div>
   );
 };
