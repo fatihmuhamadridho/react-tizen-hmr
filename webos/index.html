@@ -1,0 +1,71 @@
+<!--
+Copyright (c) 2024 LG Electronics Inc.
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+	<title>new app</title>
+</head>
+
+<script src="webOSTVjs-1.2.10/webOSTV.js" charset="utf-8"></script>
+<script src="webOSTVjs-1.2.10/webOSTV-dev.js" charset="utf-8"></script>
+<script type="text/javascript">
+	//sample code for calling LS2 API
+	webOS.service.request("luna://com.palm.systemservice", {
+		method: "clock/getTime",
+		parameters: {},
+		onSuccess: function (args) {
+			console.log("UTC:", args.utc);
+		},
+		onFailure: function (args) {
+			console.log("Failed to getTime");
+		}
+	});
+</script>
+
+<body ondragstart="return!1" onselectstart="return!1">
+	<script>
+		function setInnerHTML(targetNode, parsedNode, tagTypes) {
+			function insertTagsToTarget(type) {
+				Array.from(targetNode.querySelectorAll(type)).forEach(function (prevEl) {
+					var newEl = document.createElement(type);
+
+					Array.from(prevEl.attributes).forEach((attr) => {
+						newEl.setAttribute(attr.name, attr.value);
+					});
+
+					var textNode = document.createTextNode(prevEl.innerHTML);
+					newEl.appendChild(textNode);
+
+					prevEl.parentNode.replaceChild(newEl, prevEl);
+				});
+			}
+
+			tagTypes.forEach(insertTagsToTarget);
+
+			targetNode.innerHTML = parsedNode.innerHTML;
+		}
+
+		var localhost = 'http://192.168.1.6:3000/'; // 개발서버 IP에서 fetch
+		fetch(localhost)
+			.then(function (res) {
+				return res.text();
+			})
+			.then(function (html) {
+				var parser = new DOMParser();
+
+				var parsedDocument = parser.parseFromString(html, 'text/html');
+
+				setInnerHTML(document.head, parsedDocument.head, ['script']);
+				setInnerHTML(document.body, parsedDocument.body, ['script']);
+			});
+	</script>
+</body>
+
+</html>

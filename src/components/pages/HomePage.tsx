@@ -12,6 +12,8 @@ const HomePage = () => {
   const durationRef = useRef<number>(0);
   const currentIndex = useRef(0);
 
+  console.log((window as any).webOS);
+
   useEffect(() => {
     playVideoAtIndex(currentIndex.current);
 
